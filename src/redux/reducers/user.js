@@ -9,7 +9,7 @@ export default (state=initialState,action) => {
         case GET_USER:
             return {...state,...action.payload}
         case LOGOUT_USER:
-            return {...state,token:null}
+            return {}
         default:
             return state
     }

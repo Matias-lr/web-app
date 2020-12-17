@@ -4,6 +4,8 @@ import axios from 'axios'
 import {addToken} from './redux/actions'
 import {useHistory} from 'react-router-dom'
 import './app.css';
+import {osName,osVersion,browserName} from 'react-device-detect'
+import os from 'os'
 
 export const LoginPage = () => {
     const history = useHistory()
@@ -26,10 +28,11 @@ export const LoginPage = () => {
     }
     const handelSubmit = async(event) =>{
       event.preventDefault()
-      await axios.post('http://localhost:5000/api/user/login',{email,pass,device_name:'web_app',ip_adress:'192.168.0.1'})
+      console.log(os.arch())
+      await axios.post('http://localhost:5000/api/user/login',{email,pass,device_name:osName+' ' + osVersion + ' ' + browserName + ' ' + email,ip_adress:'199.232.0.0'})
       .then(res =>{
           dispatch(addToken(res.data))
-          history.push("/home")
+          history.push("/")
         })
       .catch(err => {
         setError({
@@ -47,6 +50,7 @@ export const LoginPage = () => {
             <button>login</button>
             {error && <p>{error.message}</p> }
           </form>
+            <p>No tienes una cuenta? <a href="#">registrate aqui</a></p>
         </div>
       </div>
     )
